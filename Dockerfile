@@ -1,0 +1,1 @@
+FROM --platform=arm64 golang:1.17
