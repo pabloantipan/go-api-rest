@@ -1,0 +1,32 @@
+### Hello World
+GET http://localhost:8080  HTTP/1.1
+
+
+### Create a new player
+POST http://localhost:8080/api/V1/players  HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "age": 25,
+  "position": "Midfielder",
+  "Rating": 23
+}
+
+### Get a player
+GET http://localhost:8080/api/V1/players/1  HTTP/1.1
+
+### Get all players
+GET http://localhost:8080/api/V1/players  HTTP/1.1
+
+
+### Update a player
+PUT http://localhost:8080/api/V1/players/1  HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "age": 35,
+  "position": "Back",
+  "Rating": 23
+}
