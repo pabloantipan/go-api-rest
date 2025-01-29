@@ -11,7 +11,7 @@ This project is a RESTful API built with Golang. It provides a set of endpoints 
 ## Requirements
 
 - Go 1.16 or higher
-- A running instance of a database (e.g., PostgreSQL, MySQL)
+- A running instance of a datastore documental database (Google Cloud Datastore)
 
 ## Installation
 
