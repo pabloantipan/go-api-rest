@@ -25,6 +25,8 @@ type ServiceAccount struct {
 	UniverseDomain          string `json:"universe_domain"`
 }
 
+const databaseID = "sport-api-rest"
+
 func NewDatastoreClient(cfg *config.Config) *datastore.Client {
 	if cfg.DatastoreServiceAccountPath == "" {
 		log.Printf("DATASTORE_SERVICE_ACCOUNT_PATH environment variable not set")
@@ -44,9 +46,10 @@ func NewDatastoreClient(cfg *config.Config) *datastore.Client {
 	}
 
 	ctx := context.Background()
-	client, err := datastore.NewClient(
+	client, err := datastore.NewClientWithDatabase(
 		ctx,
 		sa.ProjectID,
+		databaseID,
 		option.WithCredentialsFile(cfg.DatastoreServiceAccountPath),
 	)
 

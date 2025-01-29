@@ -2,10 +2,12 @@ package datastore
 
 import (
 	"context"
+	"fmt"
 	"practicing/internal/domain"
 	"practicing/internal/repository/interfaces"
 
 	"cloud.google.com/go/datastore"
+	"github.com/google/uuid"
 )
 
 const kindPlayer = "Player"
@@ -21,12 +23,20 @@ func NewDatastorePlayerRepository(client *datastore.Client) interfaces.PlayerRep
 func (p *DatastorePlayerRepo) Create(player domain.Player) (domain.Player, error) {
 	ctx := context.Background()
 
+	if player.ID == "" {
+		player.ID = uuid.New().String()
+	}
+
+	fmt.Println("Creating player: ", player)
+
 	// Create new key
-	key := datastore.IncompleteKey(kindPlayer, nil)
+	// key := datastore.IncompleteKey(kindPlayer, nil)
+	key := datastore.NameKey("Player", player.ID, nil)
 
 	// Save entity
-	newKey, err := p.client.Put(ctx, key, player)
+	newKey, err := p.client.Put(ctx, key, &player)
 	if err != nil {
+		fmt.Println("Error saving player: ", err)
 		return player, err
 	}
 
@@ -67,7 +77,7 @@ func (p *DatastorePlayerRepo) Update(player domain.Player) (domain.Player, error
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, player.ID, nil)
-	_, err := p.client.Put(ctx, key, player)
+	_, err := p.client.Put(ctx, key, &player)
 	return player, err
 }
 

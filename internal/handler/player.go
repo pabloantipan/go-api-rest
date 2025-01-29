@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"practicing/internal/domain"
 	"practicing/internal/service"
@@ -29,9 +30,12 @@ func NewPlayerHandler(s *service.PlayerService) *PlayerHandler {
 func (h *PlayerHandler) Create(c *gin.Context) {
 	var newPlayer domain.Player
 	if err := c.ShouldBindJSON(&newPlayer); err != nil {
+		fmt.Println("Error binding JSON: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	fmt.Println("Creating player 1: ", newPlayer)
 
 	player, err := h.service.Create(newPlayer)
 	if err != nil {
@@ -64,11 +68,14 @@ func (h *PlayerHandler) GetByID(c *gin.Context) {
 }
 
 func (h *PlayerHandler) Update(c *gin.Context) {
+	id := c.Param("id")
 	var updatedPlayer domain.Player
 	if err := c.ShouldBindJSON(&updatedPlayer); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	updatedPlayer.ID = id
 
 	player, err := h.service.Update(updatedPlayer)
 	if err != nil {
