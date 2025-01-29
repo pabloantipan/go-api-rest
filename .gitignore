@@ -6,4 +6,5 @@
 .env.staging
 .env.production
 
-service-accounts/*
+service-accounts/*.json
+!service-accounts/example.json
