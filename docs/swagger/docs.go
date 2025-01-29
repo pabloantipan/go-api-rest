@@ -119,8 +119,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "API Server for Player Management",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
+	// LeftDelim:        "{{",
+	// RightDelim:       "}}",
 }
 
 func init() {

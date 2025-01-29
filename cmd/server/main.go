@@ -10,6 +10,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	_ "learning/docs/swagger"
+
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
