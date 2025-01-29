@@ -1,0 +1,9 @@
+.env*
+.env.local
+.env.development
+# .env.test
+.env.qa
+.env.staging
+.env.production
+
+service-accounts/*
