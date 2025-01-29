@@ -16,6 +16,16 @@ func NewPlayerHandler(s *service.PlayerService) *PlayerHandler {
 	return &PlayerHandler{service: s}
 }
 
+// CreatePlayer godoc
+// @Summary Create a new player
+// @Description Create a new player with the provided input data
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param player body domain.Player true "Player object"
+// @Success 201 {object} domain.Player
+// @Failure 400 {object} gin.H
+// @Router /players [post]
 func (h *PlayerHandler) Create(c *gin.Context) {
 	var newPlayer domain.Player
 	if err := c.ShouldBindJSON(&newPlayer); err != nil {

@@ -17,7 +17,7 @@ This project is a RESTful API built with Golang. It provides a set of endpoints 
 
 1. Clone the repository:
   ```sh
-  git clone https://github.com/yourusername/api-rest.git
+  git clone https://github.com/pabloantipan/go-api-rest.git
   ```
 2. Navigate to the project directory:
   ```sh
@@ -53,6 +53,13 @@ The server will start on `http://localhost:8080`.
 - `POST /players` - Create a new resource
 - `PUT /players/{id}` - Update a specific resource
 - `DELETE /players/{id}` - Delete a specific resource
+
+## Generate DOCS
+
+Run
+```sh
+swag init -g cmd/server/main.go -o docs/swagger
+```
 
 ## Contributing
 
