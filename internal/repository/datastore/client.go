@@ -3,6 +3,7 @@ package datastore
 import (
 	"context"
 	"encoding/json"
+	"learning/config"
 	"log"
 	"os"
 
@@ -24,14 +25,17 @@ type ServiceAccount struct {
 	UniverseDomain          string `json:"universe_domain"`
 }
 
-func NewDatastoreClient() *datastore.Client {
-	serviceAccountPath := os.Getenv("DATASTORE_SERVICE_ACCOUNT_PATH")
-	if serviceAccountPath == "" {
+func NewDatastoreClient(cfg *config.Config) *datastore.Client {
+	// serviceAccountPath := os.Getenv("DATASTORE_SERVICE_ACCOUNT_PATH")
+	// log.Print("oli", cfg.DatastoreServiceAccountPath)
+	if cfg.DatastoreServiceAccountPath == "" {
 		log.Printf("DATASTORE_SERVICE_ACCOUNT_PATH environment variable not set")
 		return nil
 	}
 
-	data, err := os.ReadFile(serviceAccountPath)
+	log.Print("DATASTORE_SERVICE_ACCOUNT_PATH", cfg.DatastoreServiceAccountPath)
+
+	data, err := os.ReadFile(cfg.DatastoreServiceAccountPath)
 	if err != nil {
 		log.Printf("Failed to read service account file: %v", err)
 		return nil
@@ -47,7 +51,7 @@ func NewDatastoreClient() *datastore.Client {
 	client, err := datastore.NewClient(
 		ctx,
 		sa.ProjectID,
-		option.WithCredentialsFile(serviceAccountPath),
+		option.WithCredentialsFile(cfg.DatastoreServiceAccountPath),
 	)
 
 	if err != nil {
