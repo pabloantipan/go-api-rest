@@ -65,11 +65,11 @@ func main() {
 	{
 		players := api.Group("/players")
 		{
-			players.POST("/", playerHandler.Create)
-			players.GET("/", playerHandler.GetAll)
-			players.GET("/:id", playerHandler.GetByID)
-			players.PUT("/:id", playerHandler.Update)
-			players.DELETE("/:id", playerHandler.Delete)
+			players.POST("/", playerHandler.CreatePlayer)
+			players.GET("/", playerHandler.GetPlayers)
+			players.GET("/:id", playerHandler.GetPlayerByID)
+			players.PUT("/:id", playerHandler.UpdatePlayer)
+			players.DELETE("/:id", playerHandler.DeletePlayer)
 		}
 	}
 

@@ -27,7 +27,7 @@ func NewPlayerHandler(s *service.PlayerService) *PlayerHandler {
 // @Success 201 {object} domain.Player
 // @Failure 400 {object} gin.H
 // @Router /players [post]
-func (h *PlayerHandler) Create(c *gin.Context) {
+func (h *PlayerHandler) CreatePlayer(c *gin.Context) {
 	var newPlayer domain.Player
 	if err := c.ShouldBindJSON(&newPlayer); err != nil {
 		fmt.Println("Error binding JSON: ", err)
@@ -37,7 +37,7 @@ func (h *PlayerHandler) Create(c *gin.Context) {
 
 	fmt.Println("Creating player 1: ", newPlayer)
 
-	player, err := h.service.Create(newPlayer)
+	player, err := h.service.CreatePlayer(newPlayer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -46,8 +46,8 @@ func (h *PlayerHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, player)
 }
 
-func (h *PlayerHandler) GetAll(c *gin.Context) {
-	players, err := h.service.GetAll()
+func (h *PlayerHandler) GetPlayers(c *gin.Context) {
+	players, err := h.service.GetPlayers()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -56,9 +56,9 @@ func (h *PlayerHandler) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, players)
 }
 
-func (h *PlayerHandler) GetByID(c *gin.Context) {
+func (h *PlayerHandler) GetPlayerByID(c *gin.Context) {
 	id := c.Param("id")
-	player, err := h.service.GetByID(id)
+	player, err := h.service.GetPlayerByID(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
@@ -67,7 +67,7 @@ func (h *PlayerHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, player)
 }
 
-func (h *PlayerHandler) Update(c *gin.Context) {
+func (h *PlayerHandler) UpdatePlayer(c *gin.Context) {
 	id := c.Param("id")
 	var updatedPlayer domain.Player
 	if err := c.ShouldBindJSON(&updatedPlayer); err != nil {
@@ -77,7 +77,7 @@ func (h *PlayerHandler) Update(c *gin.Context) {
 
 	updatedPlayer.ID = id
 
-	player, err := h.service.Update(updatedPlayer)
+	player, err := h.service.UpdatePlayer(updatedPlayer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -86,9 +86,9 @@ func (h *PlayerHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, player)
 }
 
-func (h *PlayerHandler) Delete(c *gin.Context) {
+func (h *PlayerHandler) DeletePlayer(c *gin.Context) {
 	id := c.Param("id")
-	if err := h.service.Delete(id); err != nil {
+	if err := h.service.DeletePlayer(id); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}

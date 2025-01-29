@@ -2,7 +2,6 @@ package datastore
 
 import (
 	"context"
-	"fmt"
 	"practicing/internal/domain"
 	"practicing/internal/repository/interfaces"
 
@@ -20,23 +19,19 @@ func NewDatastorePlayerRepository(client *datastore.Client) interfaces.PlayerRep
 	return &DatastorePlayerRepo{client: client}
 }
 
-func (p *DatastorePlayerRepo) Create(player domain.Player) (domain.Player, error) {
+func (p *DatastorePlayerRepo) CreatePlayer(player domain.Player) (domain.Player, error) {
 	ctx := context.Background()
 
 	if player.ID == "" {
 		player.ID = uuid.New().String()
 	}
 
-	fmt.Println("Creating player: ", player)
-
 	// Create new key
-	// key := datastore.IncompleteKey(kindPlayer, nil)
-	key := datastore.NameKey("Player", player.ID, nil)
+	key := datastore.NameKey(kindPlayer, player.ID, nil)
 
 	// Save entity
 	newKey, err := p.client.Put(ctx, key, &player)
 	if err != nil {
-		fmt.Println("Error saving player: ", err)
 		return player, err
 	}
 
@@ -45,7 +40,7 @@ func (p *DatastorePlayerRepo) Create(player domain.Player) (domain.Player, error
 	return player, nil
 }
 
-func (p *DatastorePlayerRepo) GetByID(id string) (domain.Player, error) {
+func (p *DatastorePlayerRepo) GetPlayerByID(id string) (domain.Player, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, id, nil)
@@ -59,7 +54,7 @@ func (p *DatastorePlayerRepo) GetByID(id string) (domain.Player, error) {
 	return *player, nil
 }
 
-func (p *DatastorePlayerRepo) GetAll() ([]domain.Player, error) {
+func (p *DatastorePlayerRepo) GetPlayers() ([]domain.Player, error) {
 	ctx := context.Background()
 
 	var players []domain.Player
@@ -73,7 +68,7 @@ func (p *DatastorePlayerRepo) GetAll() ([]domain.Player, error) {
 	return players, nil
 }
 
-func (p *DatastorePlayerRepo) Update(player domain.Player) (domain.Player, error) {
+func (p *DatastorePlayerRepo) UpdatePlayer(player domain.Player) (domain.Player, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, player.ID, nil)
@@ -81,7 +76,7 @@ func (p *DatastorePlayerRepo) Update(player domain.Player) (domain.Player, error
 	return player, err
 }
 
-func (p *DatastorePlayerRepo) Delete(id string) error {
+func (p *DatastorePlayerRepo) DeletePlayer(id string) error {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, id, nil)

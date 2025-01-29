@@ -5,9 +5,9 @@ import (
 )
 
 type PlayerRepository interface {
-	Create(player domain.Player) (domain.Player, error)
-	GetByID(id string) (domain.Player, error)
-	GetAll() ([]domain.Player, error)
-	Update(player domain.Player) (domain.Player, error)
-	Delete(id string) error
+	CreatePlayer(player domain.Player) (domain.Player, error)
+	GetPlayerByID(id string) (domain.Player, error)
+	GetPlayers() ([]domain.Player, error)
+	UpdatePlayer(player domain.Player) (domain.Player, error)
+	DeletePlayer(id string) error
 }

@@ -13,22 +13,22 @@ func NewPlayerService(repo interfaces.PlayerRepository) *PlayerService {
 	return &PlayerService{repo: repo}
 }
 
-func (s *PlayerService) Create(player domain.Player) (domain.Player, error) {
-	return s.repo.Create(player)
+func (s *PlayerService) CreatePlayer(player domain.Player) (domain.Player, error) {
+	return s.repo.CreatePlayer(player)
 }
 
-func (s *PlayerService) GetByID(id string) (domain.Player, error) {
-	return s.repo.GetByID(id)
+func (s *PlayerService) GetPlayerByID(id string) (domain.Player, error) {
+	return s.repo.GetPlayerByID(id)
 }
 
-func (s *PlayerService) GetAll() ([]domain.Player, error) {
-	return s.repo.GetAll()
+func (s *PlayerService) GetPlayers() ([]domain.Player, error) {
+	return s.repo.GetPlayers()
 }
 
-func (s *PlayerService) Update(player domain.Player) (domain.Player, error) {
-	return s.repo.Update(player)
+func (s *PlayerService) UpdatePlayer(player domain.Player) (domain.Player, error) {
+	return s.repo.UpdatePlayer(player)
 }
 
-func (s *PlayerService) Delete(id string) error {
-	return s.repo.Delete(id)
+func (s *PlayerService) DeletePlayer(id string) error {
+	return s.repo.DeletePlayer(id)
 }
