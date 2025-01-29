@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"learning/internal/domain"
-	"learning/internal/service"
 	"net/http"
+	"practicing/internal/domain"
+	"practicing/internal/service"
 
 	"github.com/gin-gonic/gin"
 )

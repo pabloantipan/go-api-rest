@@ -3,9 +3,9 @@ package datastore
 import (
 	"context"
 	"encoding/json"
-	"learning/config"
 	"log"
 	"os"
+	"practicing/config"
 
 	"cloud.google.com/go/datastore"
 	"google.golang.org/api/option"
@@ -26,14 +26,10 @@ type ServiceAccount struct {
 }
 
 func NewDatastoreClient(cfg *config.Config) *datastore.Client {
-	// serviceAccountPath := os.Getenv("DATASTORE_SERVICE_ACCOUNT_PATH")
-	// log.Print("oli", cfg.DatastoreServiceAccountPath)
 	if cfg.DatastoreServiceAccountPath == "" {
 		log.Printf("DATASTORE_SERVICE_ACCOUNT_PATH environment variable not set")
 		return nil
 	}
-
-	log.Print("DATASTORE_SERVICE_ACCOUNT_PATH", cfg.DatastoreServiceAccountPath)
 
 	data, err := os.ReadFile(cfg.DatastoreServiceAccountPath)
 	if err != nil {

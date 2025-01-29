@@ -2,8 +2,8 @@ package datastore
 
 import (
 	"context"
-	"learning/internal/domain"
-	"learning/internal/repository/interfaces"
+	"practicing/internal/domain"
+	"practicing/internal/repository/interfaces"
 
 	"cloud.google.com/go/datastore"
 )

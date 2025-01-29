@@ -1,8 +1,8 @@
 package service
 
 import (
-	"learning/internal/domain"
-	"learning/internal/repository/interfaces"
+	"practicing/internal/domain"
+	"practicing/internal/repository/interfaces"
 )
 
 type PlayerService struct {

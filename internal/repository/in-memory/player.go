@@ -2,8 +2,8 @@ package inmemory
 
 import (
 	"errors"
-	"learning/internal/domain"
-	"learning/internal/repository/interfaces"
+	"practicing/internal/domain"
+	"practicing/internal/repository/interfaces"
 )
 
 type InMemoryPlayerRepo struct {

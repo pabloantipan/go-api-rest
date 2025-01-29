@@ -1,16 +1,16 @@
 package main
 
 import (
-	"learning/config"
-	"learning/internal/service"
 	"log"
+	"practicing/config"
+	"practicing/internal/service"
 
-	"learning/internal/handler"
-	"learning/internal/repository/datastore"
+	"practicing/internal/handler"
+	"practicing/internal/repository/datastore"
 
 	"github.com/gin-gonic/gin"
 
-	_ "learning/docs/swagger"
+	_ "practicing/docs/swagger"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

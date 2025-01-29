@@ -1,4 +1,4 @@
-module learning
+module practicing
 
 go 1.23.3
 

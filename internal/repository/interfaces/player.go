@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-	"learning/internal/domain"
+	"practicing/internal/domain"
 )
 
 type PlayerRepository interface {
