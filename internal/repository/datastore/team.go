@@ -54,6 +54,20 @@ func (p *DatastoreTeamRepo) GetByID(id string) (domain.Team, error) {
 	return *team, nil
 }
 
+func (p *DatastoreTeamRepo) GetByUserID(userID string) ([]domain.Team, error) {
+	ctx := context.Background()
+
+	var teams []domain.Team
+	q := datastore.NewQuery(kindTeam).FilterField("UserID", "=", userID)
+
+	_, err := p.client.GetAll(ctx, q, &teams)
+	if err != nil {
+		return nil, err
+	}
+
+	return teams, nil
+}
+
 func (p *DatastoreTeamRepo) GetAll() ([]domain.Team, error) {
 	ctx := context.Background()
 

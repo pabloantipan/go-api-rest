@@ -22,6 +22,10 @@ func (s *TeamService) GetByID(id string) (domain.Team, error) {
 	return s.repo.GetByID(id)
 }
 
+func (s *TeamService) GetByUserID(userID string) ([]domain.Team, error) {
+	return s.repo.GetByUserID(userID)
+}
+
 func (s *TeamService) GetAll() ([]domain.Team, error) {
 	return s.repo.GetAll()
 }

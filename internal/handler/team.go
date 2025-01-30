@@ -65,6 +65,17 @@ func (h *TeamHandler) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, players)
 }
 
+func (h *TeamHandler) GetByUserID(c *gin.Context) {
+	userID := c.Param("userID")
+	players, err := h.service.GetByUserID(userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, players)
+}
+
 func (h *TeamHandler) GetByID(c *gin.Context) {
 	id := c.Param("id")
 	player, err := h.service.GetByID(id)

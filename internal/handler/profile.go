@@ -53,7 +53,7 @@ func (h *ProfileHandler) GetByID(c *gin.Context) {
 	}()
 
 	go func() {
-		teams, err := h.teamService.GetByID(id)
+		teams, err := h.teamService.GetByUserID(id)
 		teamsChan <- Result{Data: teams, Error: err}
 	}()
 
