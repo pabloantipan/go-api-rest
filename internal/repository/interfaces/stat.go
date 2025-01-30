@@ -5,8 +5,9 @@ import (
 )
 
 type StatRepository interface {
-	CreateStat(stat domain.Stat) (domain.Stat, error)
-	GetStatByID(id string) (domain.Stat, error)
-	GetStats() ([]domain.Stat, error)
-	UpdateStat(stat domain.Stat) (domain.Stat, error)
+	Create(stat domain.Stat) (domain.Stat, error)
+	GetByID(id string) (domain.Stat, error)
+	GetAll() ([]domain.Stat, error)
+	Update(stat domain.Stat) (domain.Stat, error)
+	Delete(id string) error
 }

@@ -9,17 +9,17 @@ import (
 	"github.com/google/uuid"
 )
 
-const kindAchivement = "Achivement"
+const kindAchievement = "Achievement"
 
-type DatastoreAchivementRepo struct {
+type DatastoreAchievementRepo struct {
 	client *datastore.Client
 }
 
-func NewDatastoreAchivementRepository(client *datastore.Client) interfaces.AchivementRepository {
-	return &DatastoreAchivementRepo{client: client}
+func NewDatastoreAchievementRepository(client *datastore.Client) interfaces.AchievementRepository {
+	return &DatastoreAchievementRepo{client: client}
 }
 
-func (r *DatastoreAchivementRepo) CreateAchivement(achivement domain.Achivement) (domain.Achivement, error) {
+func (r *DatastoreAchievementRepo) Create(achivement domain.Achievement) (domain.Achievement, error) {
 	ctx := context.Background()
 
 	if achivement.ID == "" {
@@ -27,7 +27,7 @@ func (r *DatastoreAchivementRepo) CreateAchivement(achivement domain.Achivement)
 	}
 
 	// Create new key
-	key := datastore.NameKey(kindAchivement, achivement.ID, nil)
+	key := datastore.NameKey(kindAchievement, achivement.ID, nil)
 
 	// Save entity
 	newKey, err := r.client.Put(ctx, key, &achivement)
@@ -40,45 +40,45 @@ func (r *DatastoreAchivementRepo) CreateAchivement(achivement domain.Achivement)
 	return achivement, nil
 }
 
-func (p *DatastoreAchivementRepo) GetAchivementByID(id string) (domain.Achivement, error) {
+func (p *DatastoreAchievementRepo) GetByID(id string) (domain.Achievement, error) {
 	ctx := context.Background()
 
-	key := datastore.NameKey(kindAchivement, id, nil)
-	achivement := &domain.Achivement{}
+	key := datastore.NameKey(kindAchievement, id, nil)
+	achivement := &domain.Achievement{}
 
 	if err := p.client.Get(ctx, key, achivement); err != nil {
-		return domain.Achivement{}, err
+		return domain.Achievement{}, err
 	}
 
 	achivement.ID = id
 	return *achivement, nil
 }
 
-func (p *DatastoreAchivementRepo) GetAchivements() ([]domain.Achivement, error) {
+func (p *DatastoreAchievementRepo) GetAll() ([]domain.Achievement, error) {
 	ctx := context.Background()
 
-	var Achivements []domain.Achivement
-	q := datastore.NewQuery(kindAchivement)
+	var Achievements []domain.Achievement
+	q := datastore.NewQuery(kindAchievement)
 
-	_, err := p.client.GetAll(ctx, q, &Achivements)
+	_, err := p.client.GetAll(ctx, q, &Achievements)
 	if err != nil {
 		return nil, err
 	}
 
-	return Achivements, nil
+	return Achievements, nil
 }
 
-func (p *DatastoreAchivementRepo) UpdateAchivement(achivement domain.Achivement) (domain.Achivement, error) {
+func (p *DatastoreAchievementRepo) Update(achivement domain.Achievement) (domain.Achievement, error) {
 	ctx := context.Background()
 
-	key := datastore.NameKey(kindAchivement, achivement.ID, nil)
+	key := datastore.NameKey(kindAchievement, achivement.ID, nil)
 	_, err := p.client.Put(ctx, key, &achivement)
 	return achivement, err
 }
 
-func (p *DatastoreAchivementRepo) DeleteAchivement(id string) error {
+func (p *DatastoreAchievementRepo) Delete(id string) error {
 	ctx := context.Background()
 
-	key := datastore.NameKey(kindAchivement, id, nil)
+	key := datastore.NameKey(kindAchievement, id, nil)
 	return p.client.Delete(ctx, key)
 }

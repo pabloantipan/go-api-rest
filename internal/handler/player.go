@@ -5,16 +5,18 @@ import (
 	"net/http"
 	"poc/internal/domain"
 	"poc/internal/handler/interfaces"
-	"poc/internal/service"
+
+	serviceInterface "poc/internal/service/interfaces"
 
 	"github.com/gin-gonic/gin"
 )
 
 type PlayerHandler struct {
-	service *service.PlayerService
+	// service *service.PlayerServi
+	service serviceInterface.PlayerService
 }
 
-func NewPlayerHandler(s *service.PlayerService) interfaces.PlayerHandler {
+func NewPlayerHandler(s serviceInterface.PlayerService) interfaces.PlayerHandler {
 	return &PlayerHandler{service: s}
 }
 

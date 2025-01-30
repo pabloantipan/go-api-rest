@@ -2,14 +2,15 @@ package service
 
 import (
 	"poc/internal/domain"
-	"poc/internal/repository/interfaces"
+	repoInterface "poc/internal/repository/interfaces"
+	serviceInterface "poc/internal/service/interfaces"
 )
 
 type PlayerService struct {
-	repo interfaces.PlayerRepository
+	repo repoInterface.PlayerRepository
 }
 
-func NewPlayerService(repo interfaces.PlayerRepository) *PlayerService {
+func NewPlayerService(repo repoInterface.PlayerRepository) serviceInterface.PlayerService {
 	return &PlayerService{repo: repo}
 }
 

@@ -15,65 +15,65 @@ type DatastoreTeamRepo struct {
 	client *datastore.Client
 }
 
-func NewDatastoreTeamRepository(client *datastore.Client) interfaces.PlayerRepository {
+func NewDatastoreTeamRepository(client *datastore.Client) interfaces.TeamRepository {
 	return &DatastoreTeamRepo{client: client}
 }
 
-func (p *DatastoreTeamRepo) Create(player domain.Player) (domain.Player, error) {
+func (p *DatastoreTeamRepo) Create(team domain.Team) (domain.Team, error) {
 	ctx := context.Background()
 
-	if player.ID == "" {
-		player.ID = uuid.New().String()
+	if team.ID == "" {
+		team.ID = uuid.New().String()
 	}
 
 	// Create new key
-	key := datastore.NameKey(kindTeam, player.ID, nil)
+	key := datastore.NameKey(kindTeam, team.ID, nil)
 
 	// Save entity
-	newKey, err := p.client.Put(ctx, key, &player)
+	newKey, err := p.client.Put(ctx, key, &team)
 	if err != nil {
-		return player, err
+		return team, err
 	}
 
-	// Update player ID with the generated key
-	player.ID = newKey.Name
-	return player, nil
+	// Update team ID with the generated key
+	team.ID = newKey.Name
+	return team, nil
 }
 
-func (p *DatastoreTeamRepo) GetByID(id string) (domain.Player, error) {
+func (p *DatastoreTeamRepo) GetByID(id string) (domain.Team, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindTeam, id, nil)
-	player := &domain.Player{}
+	team := &domain.Team{}
 
-	if err := p.client.Get(ctx, key, player); err != nil {
-		return domain.Player{}, err
+	if err := p.client.Get(ctx, key, team); err != nil {
+		return domain.Team{}, err
 	}
 
-	player.ID = id
-	return *player, nil
+	team.ID = id
+	return *team, nil
 }
 
-func (p *DatastoreTeamRepo) GetAll() ([]domain.Player, error) {
+func (p *DatastoreTeamRepo) GetAll() ([]domain.Team, error) {
 	ctx := context.Background()
 
-	var players []domain.Player
+	var teams []domain.Team
 	q := datastore.NewQuery(kindTeam)
 
-	_, err := p.client.GetAll(ctx, q, &players)
+	_, err := p.client.GetAll(ctx, q, &teams)
 	if err != nil {
 		return nil, err
 	}
 
-	return players, nil
+	return teams, nil
 }
 
-func (p *DatastoreTeamRepo) Update(player domain.Player) (domain.Player, error) {
+func (p *DatastoreTeamRepo) Update(team domain.Team) (domain.Team, error) {
 	ctx := context.Background()
 
-	key := datastore.NameKey(kindTeam, player.ID, nil)
-	_, err := p.client.Put(ctx, key, &player)
-	return player, err
+	key := datastore.NameKey(kindTeam, team.ID, nil)
+	_, err := p.client.Put(ctx, key, &team)
+	return team, err
 }
 
 func (p *DatastoreTeamRepo) Delete(id string) error {

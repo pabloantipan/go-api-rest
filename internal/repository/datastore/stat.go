@@ -19,7 +19,7 @@ func NewDatastoreStatRepository(client *datastore.Client) interfaces.StatReposit
 	return &DatastoreStatRepo{client: client}
 }
 
-func (p *DatastoreStatRepo) CreateStat(stat domain.Stat) (domain.Stat, error) {
+func (p *DatastoreStatRepo) Create(stat domain.Stat) (domain.Stat, error) {
 	ctx := context.Background()
 
 	if stat.ID == "" {
@@ -40,7 +40,7 @@ func (p *DatastoreStatRepo) CreateStat(stat domain.Stat) (domain.Stat, error) {
 	return stat, nil
 }
 
-func (p *DatastoreStatRepo) GetStatByID(id string) (domain.Stat, error) {
+func (p *DatastoreStatRepo) GetByID(id string) (domain.Stat, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindStat, id, nil)
@@ -54,7 +54,7 @@ func (p *DatastoreStatRepo) GetStatByID(id string) (domain.Stat, error) {
 	return *stat, nil
 }
 
-func (p *DatastoreStatRepo) GetStats() ([]domain.Stat, error) {
+func (p *DatastoreStatRepo) GetAll() ([]domain.Stat, error) {
 	ctx := context.Background()
 
 	var players []domain.Stat
@@ -68,7 +68,7 @@ func (p *DatastoreStatRepo) GetStats() ([]domain.Stat, error) {
 	return players, nil
 }
 
-func (p *DatastoreStatRepo) UpdateStat(stat domain.Stat) (domain.Stat, error) {
+func (p *DatastoreStatRepo) Update(stat domain.Stat) (domain.Stat, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindStat, stat.ID, nil)
@@ -76,7 +76,7 @@ func (p *DatastoreStatRepo) UpdateStat(stat domain.Stat) (domain.Stat, error) {
 	return stat, err
 }
 
-func (p *DatastoreStatRepo) DeleteStat(id string) error {
+func (p *DatastoreStatRepo) Delete(id string) error {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindStat, id, nil)

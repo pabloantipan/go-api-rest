@@ -44,10 +44,21 @@ func main() {
 
 	// Initialize repositories
 	playerRepo := datastore.NewDatastorePlayerRepository(datastoreClient)
+	statRepo := datastore.NewDatastoreStatRepository(datastoreClient)
+	achivementRepo := datastore.NewDatastoreAchievementRepository(datastoreClient)
+	teamRepo := datastore.NewDatastoreTeamRepository(datastoreClient)
 
-	// Initialize services, controllers, handlers...
+	// Initialize services
 	playerService := service.NewPlayerService(playerRepo)
+	statService := service.NewStatService(statRepo)
+	achivementService := service.NewAchievementService(achivementRepo)
+	teamRepoService := service.NewTeamService(teamRepo)
+
+	// Initialize handlers
 	playerHandler := handler.NewPlayerHandler(playerService)
+	statHandler := handler.NewStatHandler(statService)
+	achivementHandler := handler.NewAchievementHandler(achivementService)
+	teamHandler := handler.NewTeamHandler(teamRepoService)
 
 	// Setup router
 	router := gin.Default()
@@ -70,6 +81,33 @@ func main() {
 			players.GET("/:id", playerHandler.GetByID)
 			players.PUT("/:id", playerHandler.Update)
 			players.DELETE("/:id", playerHandler.Delete)
+		}
+
+		teams := api.Group("/teams")
+		{
+			teams.POST("/", teamHandler.Create)
+			teams.GET("/", teamHandler.GetAll)
+			teams.GET("/:id", teamHandler.GetByID)
+			teams.PUT("/:id", teamHandler.Update)
+			teams.DELETE("/:id", teamHandler.Delete)
+		}
+
+		stats := api.Group("/stats")
+		{
+			stats.POST("/", statHandler.Create)
+			stats.GET("/", statHandler.GetAll)
+			stats.GET("/:id", statHandler.GetByID)
+			stats.PUT("/:id", statHandler.Update)
+			stats.DELETE("/:id", statHandler.Delete)
+		}
+
+		achivements := api.Group("/achivements")
+		{
+			achivements.POST("/", achivementHandler.Create)
+			achivements.GET("/", achivementHandler.GetAll)
+			achivements.GET("/:id", achivementHandler.GetByID)
+			achivements.PUT("/:id", achivementHandler.Update)
+			achivements.DELETE("/:id", achivementHandler.Delete)
 		}
 	}
 

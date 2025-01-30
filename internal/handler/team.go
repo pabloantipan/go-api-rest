@@ -5,40 +5,40 @@ import (
 	"net/http"
 	"poc/internal/domain"
 	"poc/internal/handler/interfaces"
-	"poc/internal/service"
+	serviceInterfaces "poc/internal/service/interfaces"
 
 	"github.com/gin-gonic/gin"
 )
 
 type TeamHandler struct {
-	service *service.PlayerService
+	service serviceInterfaces.TeamService
 }
 
-func NewTeamHandler(s *service.PlayerService) interfaces.TeamHandler {
+func NewTeamHandler(s serviceInterfaces.TeamService) interfaces.TeamHandler {
 	return &TeamHandler{service: s}
 }
 
-// CreatePlayer godoc
+// CreateTeam godoc
 // @Summary Create a new player
 // @Description Create a new player with the provided input data
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param player body domain.Player true "Player object"
-// @Success 201 {object} domain.Player
+// @Param player body domain.Team true "Team object"
+// @Success 201 {object} domain.Team
 // @Failure 400 {object} gin.H
 // @Router /players [post]
 func (h *TeamHandler) Create(c *gin.Context) {
-	var newPlayer domain.Player
-	if err := c.ShouldBindJSON(&newPlayer); err != nil {
+	var newTeam domain.Team
+	if err := c.ShouldBindJSON(&newTeam); err != nil {
 		fmt.Println("Error binding JSON: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	fmt.Println("Creating player 1: ", newPlayer)
+	fmt.Println("Creating player 1: ", newTeam)
 
-	player, err := h.service.Create(newPlayer)
+	player, err := h.service.Create(newTeam)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -47,12 +47,12 @@ func (h *TeamHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, player)
 }
 
-// GetPlayers godoc
+// GetTeams godoc
 // @Summary Get all players
 // @Description Get all players
 // @Tags players
 // @Produce json
-// @Success 200 {array} domain.Player
+// @Success 200 {array} domain.Team
 // @Failure 500 {object} gin.H
 // @Router /players [get]
 func (h *TeamHandler) GetAll(c *gin.Context) {
@@ -78,15 +78,15 @@ func (h *TeamHandler) GetByID(c *gin.Context) {
 
 func (h *TeamHandler) Update(c *gin.Context) {
 	id := c.Param("id")
-	var updatedPlayer domain.Player
-	if err := c.ShouldBindJSON(&updatedPlayer); err != nil {
+	var updatedTeam domain.Team
+	if err := c.ShouldBindJSON(&updatedTeam); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	updatedPlayer.ID = id
+	updatedTeam.ID = id
 
-	player, err := h.service.Update(updatedPlayer)
+	player, err := h.service.Update(updatedTeam)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

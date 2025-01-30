@@ -4,10 +4,10 @@ import (
 	"poc/internal/domain"
 )
 
-type AchivementRepository interface {
-	CreateAchivement(achivement domain.Achivement) (domain.Achivement, error)
-	GetAchivementByID(id string) (domain.Achivement, error)
-	GetAchivements() ([]domain.Achivement, error)
-	UpdateAchivement(achivement domain.Achivement) (domain.Achivement, error)
-	DeleteAchivement(id string) error
+type AchievementRepository interface {
+	Create(achievement domain.Achievement) (domain.Achievement, error)
+	GetByID(id string) (domain.Achievement, error)
+	GetAll() ([]domain.Achievement, error)
+	Update(achievement domain.Achievement) (domain.Achievement, error)
+	Delete(id string) error
 }
