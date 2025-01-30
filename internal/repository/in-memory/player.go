@@ -2,8 +2,8 @@ package inmemory
 
 import (
 	"errors"
-	"practicing/internal/domain"
-	"practicing/internal/repository/interfaces"
+	"poc/internal/domain"
+	"poc/internal/repository/interfaces"
 )
 
 type InMemoryPlayerRepo struct {
@@ -15,14 +15,14 @@ func NewInMemoryPlayerRepository() interfaces.PlayerRepository {
 }
 
 // Create implements PlayerRepository.
-func (p *InMemoryPlayerRepo) CreatePlayer(player domain.Player) (domain.Player, error) {
+func (p *InMemoryPlayerRepo) Create(player domain.Player) (domain.Player, error) {
 	p.players[player.ID] = player
 
 	return player, nil
 }
 
 // GetByID implements PlayerRepository.
-func (p *InMemoryPlayerRepo) GetPlayerByID(id string) (domain.Player, error) {
+func (p *InMemoryPlayerRepo) GetByID(id string) (domain.Player, error) {
 	player, ok := p.players[id]
 
 	if !ok {
@@ -33,7 +33,7 @@ func (p *InMemoryPlayerRepo) GetPlayerByID(id string) (domain.Player, error) {
 }
 
 // GetAll implements PlayerRepository.
-func (p *InMemoryPlayerRepo) GetPlayers() ([]domain.Player, error) {
+func (p *InMemoryPlayerRepo) GetAll() ([]domain.Player, error) {
 	playerList := make([]domain.Player, 0, len(p.players))
 	for _, player := range p.players {
 		playerList = append(playerList, player)
@@ -43,7 +43,7 @@ func (p *InMemoryPlayerRepo) GetPlayers() ([]domain.Player, error) {
 }
 
 // Update implements PlayerRepository.
-func (p *InMemoryPlayerRepo) UpdatePlayer(player domain.Player) (domain.Player, error) {
+func (p *InMemoryPlayerRepo) Update(player domain.Player) (domain.Player, error) {
 	_, ok := p.players[player.ID]
 	if !ok {
 		return domain.Player{}, errors.New("player not found")
@@ -54,7 +54,7 @@ func (p *InMemoryPlayerRepo) UpdatePlayer(player domain.Player) (domain.Player, 
 }
 
 // Delete implements PlayerRepository.
-func (p *InMemoryPlayerRepo) DeletePlayer(id string) error {
+func (p *InMemoryPlayerRepo) Delete(id string) error {
 	_, ok := p.players[id]
 	if !ok {
 		return errors.New("player not found")

@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-	"practicing/internal/domain"
+	"poc/internal/domain"
 )
 
 type StatRepository interface {

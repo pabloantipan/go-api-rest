@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
-	"practicing/config"
+	"poc/config"
 
 	"cloud.google.com/go/datastore"
 	"google.golang.org/api/option"

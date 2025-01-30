@@ -1,4 +1,4 @@
-module practicing
+module poc
 
 go 1.23.3
 

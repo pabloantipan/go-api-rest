@@ -1,13 +1,13 @@
 package interfaces
 
 import (
-	"practicing/internal/domain"
+	"poc/internal/domain"
 )
 
 type PlayerRepository interface {
-	CreatePlayer(player domain.Player) (domain.Player, error)
-	GetPlayerByID(id string) (domain.Player, error)
-	GetPlayers() ([]domain.Player, error)
-	UpdatePlayer(player domain.Player) (domain.Player, error)
-	DeletePlayer(id string) error
+	Create(player domain.Player) (domain.Player, error)
+	GetByID(id string) (domain.Player, error)
+	GetAll() ([]domain.Player, error)
+	Update(player domain.Player) (domain.Player, error)
+	Delete(id string) error
 }

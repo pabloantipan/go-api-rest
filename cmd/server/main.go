@@ -2,15 +2,15 @@ package main
 
 import (
 	"log"
-	"practicing/config"
-	"practicing/internal/service"
+	"poc/config"
+	"poc/internal/service"
 
-	"practicing/internal/handler"
-	"practicing/internal/repository/datastore"
+	"poc/internal/handler"
+	"poc/internal/repository/datastore"
 
 	"github.com/gin-gonic/gin"
 
-	_ "practicing/docs/swagger"
+	_ "poc/docs/swagger"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -65,11 +65,11 @@ func main() {
 	{
 		players := api.Group("/players")
 		{
-			players.POST("/", playerHandler.CreatePlayer)
-			players.GET("/", playerHandler.GetPlayers)
-			players.GET("/:id", playerHandler.GetPlayerByID)
-			players.PUT("/:id", playerHandler.UpdatePlayer)
-			players.DELETE("/:id", playerHandler.DeletePlayer)
+			players.POST("/", playerHandler.Create)
+			players.GET("/", playerHandler.GetAll)
+			players.GET("/:id", playerHandler.GetByID)
+			players.PUT("/:id", playerHandler.Update)
+			players.DELETE("/:id", playerHandler.Delete)
 		}
 	}
 

@@ -2,8 +2,8 @@ package datastore
 
 import (
 	"context"
-	"practicing/internal/domain"
-	"practicing/internal/repository/interfaces"
+	"poc/internal/domain"
+	"poc/internal/repository/interfaces"
 
 	"cloud.google.com/go/datastore"
 	"github.com/google/uuid"
@@ -19,7 +19,7 @@ func NewDatastorePlayerRepository(client *datastore.Client) interfaces.PlayerRep
 	return &DatastorePlayerRepo{client: client}
 }
 
-func (p *DatastorePlayerRepo) CreatePlayer(player domain.Player) (domain.Player, error) {
+func (p *DatastorePlayerRepo) Create(player domain.Player) (domain.Player, error) {
 	ctx := context.Background()
 
 	if player.ID == "" {
@@ -40,7 +40,7 @@ func (p *DatastorePlayerRepo) CreatePlayer(player domain.Player) (domain.Player,
 	return player, nil
 }
 
-func (p *DatastorePlayerRepo) GetPlayerByID(id string) (domain.Player, error) {
+func (p *DatastorePlayerRepo) GetByID(id string) (domain.Player, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, id, nil)
@@ -54,7 +54,7 @@ func (p *DatastorePlayerRepo) GetPlayerByID(id string) (domain.Player, error) {
 	return *player, nil
 }
 
-func (p *DatastorePlayerRepo) GetPlayers() ([]domain.Player, error) {
+func (p *DatastorePlayerRepo) GetAll() ([]domain.Player, error) {
 	ctx := context.Background()
 
 	var players []domain.Player
@@ -68,7 +68,7 @@ func (p *DatastorePlayerRepo) GetPlayers() ([]domain.Player, error) {
 	return players, nil
 }
 
-func (p *DatastorePlayerRepo) UpdatePlayer(player domain.Player) (domain.Player, error) {
+func (p *DatastorePlayerRepo) Update(player domain.Player) (domain.Player, error) {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, player.ID, nil)
@@ -76,7 +76,7 @@ func (p *DatastorePlayerRepo) UpdatePlayer(player domain.Player) (domain.Player,
 	return player, err
 }
 
-func (p *DatastorePlayerRepo) DeletePlayer(id string) error {
+func (p *DatastorePlayerRepo) Delete(id string) error {
 	ctx := context.Background()
 
 	key := datastore.NameKey(kindPlayer, id, nil)

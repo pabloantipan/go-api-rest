@@ -3,8 +3,9 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"practicing/internal/domain"
-	"practicing/internal/service"
+	"poc/internal/domain"
+	"poc/internal/handler/interfaces"
+	"poc/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,7 @@ type PlayerHandler struct {
 	service *service.PlayerService
 }
 
-func NewPlayerHandler(s *service.PlayerService) *PlayerHandler {
+func NewPlayerHandler(s *service.PlayerService) interfaces.PlayerHandler {
 	return &PlayerHandler{service: s}
 }
 
@@ -27,7 +28,7 @@ func NewPlayerHandler(s *service.PlayerService) *PlayerHandler {
 // @Success 201 {object} domain.Player
 // @Failure 400 {object} gin.H
 // @Router /players [post]
-func (h *PlayerHandler) CreatePlayer(c *gin.Context) {
+func (h *PlayerHandler) Create(c *gin.Context) {
 	var newPlayer domain.Player
 	if err := c.ShouldBindJSON(&newPlayer); err != nil {
 		fmt.Println("Error binding JSON: ", err)
@@ -37,7 +38,7 @@ func (h *PlayerHandler) CreatePlayer(c *gin.Context) {
 
 	fmt.Println("Creating player 1: ", newPlayer)
 
-	player, err := h.service.CreatePlayer(newPlayer)
+	player, err := h.service.Create(newPlayer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -46,8 +47,16 @@ func (h *PlayerHandler) CreatePlayer(c *gin.Context) {
 	c.JSON(http.StatusCreated, player)
 }
 
-func (h *PlayerHandler) GetPlayers(c *gin.Context) {
-	players, err := h.service.GetPlayers()
+// GetPlayers godoc
+// @Summary Get all players
+// @Description Get all players
+// @Tags players
+// @Produce json
+// @Success 200 {array} domain.Player
+// @Failure 500 {object} gin.H
+// @Router /players [get]
+func (h *PlayerHandler) GetAll(c *gin.Context) {
+	players, err := h.service.GetAll()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -56,9 +65,9 @@ func (h *PlayerHandler) GetPlayers(c *gin.Context) {
 	c.JSON(http.StatusOK, players)
 }
 
-func (h *PlayerHandler) GetPlayerByID(c *gin.Context) {
+func (h *PlayerHandler) GetByID(c *gin.Context) {
 	id := c.Param("id")
-	player, err := h.service.GetPlayerByID(id)
+	player, err := h.service.GetByID(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
@@ -67,7 +76,7 @@ func (h *PlayerHandler) GetPlayerByID(c *gin.Context) {
 	c.JSON(http.StatusOK, player)
 }
 
-func (h *PlayerHandler) UpdatePlayer(c *gin.Context) {
+func (h *PlayerHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	var updatedPlayer domain.Player
 	if err := c.ShouldBindJSON(&updatedPlayer); err != nil {
@@ -77,7 +86,7 @@ func (h *PlayerHandler) UpdatePlayer(c *gin.Context) {
 
 	updatedPlayer.ID = id
 
-	player, err := h.service.UpdatePlayer(updatedPlayer)
+	player, err := h.service.Update(updatedPlayer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -86,9 +95,9 @@ func (h *PlayerHandler) UpdatePlayer(c *gin.Context) {
 	c.JSON(http.StatusOK, player)
 }
 
-func (h *PlayerHandler) DeletePlayer(c *gin.Context) {
+func (h *PlayerHandler) Delete(c *gin.Context) {
 	id := c.Param("id")
-	if err := h.service.DeletePlayer(id); err != nil {
+	if err := h.service.Delete(id); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
