@@ -12,7 +12,6 @@ import (
 )
 
 type PlayerHandler struct {
-	// service *service.PlayerServi
 	service serviceInterface.PlayerService
 }
 

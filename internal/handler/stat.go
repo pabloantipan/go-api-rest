@@ -76,6 +76,17 @@ func (h *StatHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, stat)
 }
 
+func (h *StatHandler) GetByUserID(c *gin.Context) {
+	id := c.Param("id")
+	stat, err := h.service.GetByUserID(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, stat)
+}
+
 func (h *StatHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	var updatedStat domain.Stat

@@ -22,6 +22,10 @@ func (s *StatService) GetByID(id string) (domain.Stat, error) {
 	return s.repo.GetByID(id)
 }
 
+func (s *StatService) GetByUserID(id string) ([]domain.Stat, error) {
+	return s.repo.GetByUserID(id)
+}
+
 func (s *StatService) GetAll() ([]domain.Stat, error) {
 	return s.repo.GetAll()
 }

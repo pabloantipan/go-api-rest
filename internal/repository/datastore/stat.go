@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"context"
+	"fmt"
 	"poc/internal/domain"
 	"poc/internal/repository/interfaces"
 
@@ -54,18 +55,38 @@ func (p *DatastoreStatRepo) GetByID(id string) (domain.Stat, error) {
 	return *stat, nil
 }
 
-func (p *DatastoreStatRepo) GetAll() ([]domain.Stat, error) {
+func (p *DatastoreStatRepo) GetByUserID(userId string) ([]domain.Stat, error) {
+	fmt.Println("GetByUserID", userId)
 	ctx := context.Background()
 
-	var players []domain.Stat
-	q := datastore.NewQuery(kindStat)
+	var stats []domain.Stat
+	q := datastore.NewQuery(kindStat).FilterField("UserID", "=", userId)
 
-	_, err := p.client.GetAll(ctx, q, &players)
+	fmt.Println("GetByUserID", q)
+
+	_, err := p.client.GetAll(ctx, q, &stats)
+
+	fmt.Println("GetByUserID", stats)
+
 	if err != nil {
 		return nil, err
 	}
 
-	return players, nil
+	return stats, nil
+}
+
+func (p *DatastoreStatRepo) GetAll() ([]domain.Stat, error) {
+	ctx := context.Background()
+
+	var stats []domain.Stat
+	q := datastore.NewQuery(kindStat)
+
+	_, err := p.client.GetAll(ctx, q, &stats)
+	if err != nil {
+		return nil, err
+	}
+
+	return stats, nil
 }
 
 func (p *DatastoreStatRepo) Update(stat domain.Stat) (domain.Stat, error) {

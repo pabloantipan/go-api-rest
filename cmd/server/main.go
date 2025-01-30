@@ -60,6 +60,8 @@ func main() {
 	achivementHandler := handler.NewAchievementHandler(achivementService)
 	teamHandler := handler.NewTeamHandler(teamRepoService)
 
+	profileHandler := handler.NewProfileHandler(statService, achivementService, teamRepoService)
+
 	// Setup router
 	router := gin.Default()
 
@@ -97,6 +99,7 @@ func main() {
 			stats.POST("/", statHandler.Create)
 			stats.GET("/", statHandler.GetAll)
 			stats.GET("/:id", statHandler.GetByID)
+			stats.GET("/user/:id", statHandler.GetByUserID)
 			stats.PUT("/:id", statHandler.Update)
 			stats.DELETE("/:id", statHandler.Delete)
 		}
@@ -108,6 +111,11 @@ func main() {
 			achivements.GET("/:id", achivementHandler.GetByID)
 			achivements.PUT("/:id", achivementHandler.Update)
 			achivements.DELETE("/:id", achivementHandler.Delete)
+		}
+
+		profile := api.Group("/profile")
+		{
+			profile.GET("/:id", profileHandler.GetByID)
 		}
 	}
 
