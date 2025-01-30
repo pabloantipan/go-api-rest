@@ -54,6 +54,20 @@ func (p *DatastoreAchievementRepo) GetByID(id string) (domain.Achievement, error
 	return *achivement, nil
 }
 
+func (p *DatastoreAchievementRepo) GetByUserID(userId string) ([]domain.Achievement, error) {
+	ctx := context.Background()
+
+	var Achievements []domain.Achievement
+	q := datastore.NewQuery(kindAchievement).FilterField("UserID", "=", userId)
+
+	_, err := p.client.GetAll(ctx, q, &Achievements)
+	if err != nil {
+		return nil, err
+	}
+
+	return Achievements, nil
+}
+
 func (p *DatastoreAchievementRepo) GetAll() ([]domain.Achievement, error) {
 	ctx := context.Background()
 

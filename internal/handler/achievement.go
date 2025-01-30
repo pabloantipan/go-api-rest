@@ -76,6 +76,17 @@ func (h *AchievementHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, Achievement)
 }
 
+func (h *AchievementHandler) GetByUserID(c *gin.Context) {
+	userId := c.Param("userId")
+	Achievements, err := h.service.GetByUserID(userId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, Achievements)
+}
+
 func (h *AchievementHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	var updatedAchievement domain.Achievement

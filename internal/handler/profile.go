@@ -43,12 +43,12 @@ func (h *ProfileHandler) GetByID(c *gin.Context) {
 	teamsChan := make(chan Result)
 
 	go func() {
-		stats, err := h.statService.GetByID(id)
+		stats, err := h.statService.GetByUserID(id)
 		statsChan <- Result{Data: stats, Error: err}
 	}()
 
 	go func() {
-		achievements, err := h.achievementService.GetByID(id)
+		achievements, err := h.achievementService.GetByUserID(id)
 		achievementsChan <- Result{Data: achievements, Error: err}
 	}()
 

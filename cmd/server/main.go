@@ -104,13 +104,14 @@ func main() {
 			stats.DELETE("/:id", statHandler.Delete)
 		}
 
-		achivements := api.Group("/achivements")
+		achievements := api.Group("/achievements")
 		{
-			achivements.POST("/", achivementHandler.Create)
-			achivements.GET("/", achivementHandler.GetAll)
-			achivements.GET("/:id", achivementHandler.GetByID)
-			achivements.PUT("/:id", achivementHandler.Update)
-			achivements.DELETE("/:id", achivementHandler.Delete)
+			achievements.POST("/", achivementHandler.Create)
+			achievements.GET("/", achivementHandler.GetAll)
+			achievements.GET("/:id", achivementHandler.GetByID)
+			achievements.GET("/user/:id", achivementHandler.GetByUserID)
+			achievements.PUT("/:id", achivementHandler.Update)
+			achievements.DELETE("/:id", achivementHandler.Delete)
 		}
 
 		profile := api.Group("/profile")

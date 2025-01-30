@@ -22,6 +22,10 @@ func (s *AchievementService) GetByID(id string) (domain.Achievement, error) {
 	return s.repo.GetByID(id)
 }
 
+func (s *AchievementService) GetByUserID(userId string) ([]domain.Achievement, error) {
+	return s.repo.GetByUserID(userId)
+}
+
 func (s *AchievementService) GetAll() ([]domain.Achievement, error) {
 	return s.repo.GetAll()
 }
